@@ -1,6 +1,16 @@
-starlingdocset
+Starling 1.4.1 Dash docset
 ==============
 
-Dash docset for the starling framework
+This is my first attempt at creating a docset for [Dash](http://kapeli.com/dash) included in this repository are  
+  
+Starling docset: starling.docset    
+Ruby Generation Script: populateIndex.rb  
+Dash document feed files: Starling.xml, starling.tgz  
+  
+To install the document feed please use the below link and press install, your browser will open dash and subscribe to the feed.  
+  
+[http://nicholasjackson.github.io/starlingdocset](http://nicholasjackson.github.io/starlingdocset)  
+  
+At present only classes and methods are included however I plan to add the rest of the documentation when I find time.
 
-[Click here to install](dash-feed://https%3A%2F%2Fraw.github.com%2Fnicholasjackson%2Fstarlingdocset%2Fmaster%2FStarling.xml)
+

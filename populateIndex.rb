@@ -11,7 +11,7 @@ def createSQLLiteDB
 end
 
 def parseFile(filename)
-  filepath = "html/" + filename
+  filepath = "starlingdocs/" + filename
   doc = Nokogiri::HTML(open(filepath))
   header = doc.css("td.titleTableSubTitle")
   
@@ -19,10 +19,31 @@ def parseFile(filename)
   @db.execute(insert)
   puts insert
 
+  #Add propertes
+  doc.css("#summaryTableProperty > tr > .summaryTableSignatureCol > .signatureLink").each do |x|
+    if x.parent.parent.attr("class") != "hideInheritedProperty"
+      insert = "INSERT INTO searchIndex VALUES (NULL, '#{x.text}', 'Property', '#{filename}#{x.attr('href')}');"
+      @db.execute(insert)
+      puts "    " + insert
+    end
+  end
+
+  #Add constants
+  doc.css("#summaryTableConstant > tr > .summaryTableSignatureCol > .signatureLink").each do |x|
+    if x.parent.parent.attr("class") != "hideInheritedConstant"
+      insert = "INSERT INTO searchIndex VALUES (NULL, '#{x.text}', 'Constant', '#{filename}#{x.attr('href')}');"
+      @db.execute(insert)
+      puts "    " + insert
+    end
+  end
+
+  #Add methods
   doc.css("#summaryTableMethod > tr > .summaryTableSignatureCol > div > .signatureLink").each do |x|
-    insert = "INSERT INTO searchIndex VALUES (NULL, '#{x.text}', 'Method', '#{filename}#{x.attr('href')}');"
-    @db.execute(insert)
-    puts insert
+    if x.parent.parent.parent.attr("class") != "hideInheritedMethod"
+      insert = "INSERT INTO searchIndex VALUES (NULL, '#{x.text}', 'Method', '#{filename}#{x.attr('href')}');"
+      @db.execute(insert)
+      puts "    " + insert
+    end
   end
 
 end
